@@ -1,7 +1,6 @@
 import {
   GetCommand,
   PutCommand,
-  QueryCommand,
   ScanCommand,
   UpdateCommand,
   DeleteCommand,
