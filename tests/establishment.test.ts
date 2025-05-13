@@ -105,7 +105,9 @@ describe("POST /establishment/find/:id", () => {
   });
 
   it("should return 200", async () => {
-    const res = await request(app).get(`/establishment/find/${establishmentId}`);
+    const res = await request(app).get(
+      `/establishment/find/${establishmentId}`,
+    );
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("success");
@@ -134,9 +136,11 @@ describe("PUT /establishment/edit/:id", () => {
   });
 
   it("should return 200", async () => {
-    const res = await request(app).put(`/establishment/edit/${establishmentId}`).send({
-      name: "EditedName",
-    });
+    const res = await request(app)
+      .put(`/establishment/edit/${establishmentId}`)
+      .send({
+        name: "EditedName",
+      });
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("success");
@@ -162,7 +166,9 @@ describe("PUT /establishment/rules/:id", () => {
   });
 
   it("should return 200", async () => {
-    const res = await request(app).get(`/establishment/rules/${establishmentId}`);
+    const res = await request(app).get(
+      `/establishment/rules/${establishmentId}`,
+    );
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("success");
@@ -186,9 +192,11 @@ describe("PUT /establishment/rules/:id/edit", () => {
   });
 
   it("should return 200", async () => {
-    const res = await request(app).put(`/establishment/rules/${establishmentId}/edit`).send({
-      videoLimit: 10,
-    });
+    const res = await request(app)
+      .put(`/establishment/rules/${establishmentId}/edit`)
+      .send({
+        videoLimit: 10,
+      });
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("success");
@@ -236,7 +244,9 @@ describe("PUT /establishment/delete/:id", () => {
   });
 
   it("should return 200", async () => {
-    const res = await request(app).delete(`/establishment/delete/${establishmentId}`);
+    const res = await request(app).delete(
+      `/establishment/delete/${establishmentId}`,
+    );
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("success");

@@ -7,13 +7,17 @@ interface GraphQLErrorShape {
 
 export default function errorToString(error: unknown): string {
   if (error instanceof ZodError) {
-    return error.issues.map(({ path, message }) => `${path[0] ?? ""} ${message}`.trim()).join(", ");
+    return error.issues
+      .map(({ path, message }) => `${path[0] ?? ""} ${message}`.trim())
+      .join(", ");
   }
 
   if (
     typeof error === "object" &&
     error !== null &&
-    Array.isArray((error as { graphQLErrors: GraphQLErrorShape[] }).graphQLErrors)
+    Array.isArray(
+      (error as { graphQLErrors: GraphQLErrorShape[] }).graphQLErrors,
+    )
   ) {
     const gql = (error as { graphQLErrors: GraphQLErrorShape[] })
       .graphQLErrors as GraphQLErrorShape[];

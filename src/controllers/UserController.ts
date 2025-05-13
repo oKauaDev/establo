@@ -16,7 +16,7 @@ const UserController = {
       const newuser = await UserService.create(
         req.body.name,
         req.body.email.toLowerCase(),
-        req.body.type
+        req.body.type,
       );
 
       if (!newuser) {

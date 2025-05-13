@@ -46,12 +46,12 @@ DYNAMODB_ENDPOINT=http://localhost:8000 #pode remover no modo produção
 tests/
 └── *.test.ts
 src/
-├── aws/
-├── controllers/
-├── middlewares/
-├── routes/
-├── services/
-├── types/
+├── aws/ (arquivos relacionados ao sdk da aws)
+├── controllers/ (controllers das rotas)
+├── middlewares/ (middlewares)
+├── routes/ (rotas)
+├── services/ (serviços relacionados ao banco de dados)
+├── types/ (tipagens)
 ├── utils/
 ├── app.ts
 └── index.ts

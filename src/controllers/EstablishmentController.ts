@@ -18,14 +18,18 @@ const EstablishmentController = {
       }
 
       if (user.type !== "owner") {
-        res.status(403).json({ error: "O estabelecimento precisa ser do tipo proprietário" });
+        res
+          .status(403)
+          .json({
+            error: "O estabelecimento precisa ser do tipo proprietário",
+          });
         return;
       }
 
       const establishment = await EstablishmentService.create(
         req.body.name,
         req.body.ownerId,
-        req.body.type
+        req.body.type,
       );
 
       if (!establishment) {
@@ -87,7 +91,10 @@ const EstablishmentController = {
       if (req.body.email) body.ownerId = req.body.ownerId;
       if (req.body.type) body.type = req.body.type;
 
-      const editEstablishment = await EstablishmentService.edit(req.params.id, body);
+      const editEstablishment = await EstablishmentService.edit(
+        req.params.id,
+        body,
+      );
 
       if (!editEstablishment) {
         res.status(500).json({ error: "Erro ao editar estabelecimento" });
@@ -120,9 +127,8 @@ const EstablishmentController = {
 
       const deleted = await EstablishmentService.delete(req.params.id);
 
-      const establishmentRules = await EstablishmentRulesService.getByEstablishment(
-        establishment.id
-      );
+      const establishmentRules =
+        await EstablishmentRulesService.getByEstablishment(establishment.id);
 
       if (establishmentRules) {
         await EstablishmentRulesService.delete(establishmentRules.id);
@@ -164,7 +170,10 @@ const EstablishmentController = {
           establishments: establishments,
         });
       } else {
-        const establishments = await EstablishmentService.filter({ name, type: zType });
+        const establishments = await EstablishmentService.filter({
+          name,
+          type: zType,
+        });
 
         if (!establishments) {
           res.status(404).json({ error: "Nenhum estabelecimento encontrado" });
@@ -191,9 +200,8 @@ const EstablishmentController = {
         return;
       }
 
-      const establishmentRules = await EstablishmentRulesService.getByEstablishment(
-        establishment.id
-      );
+      const establishmentRules =
+        await EstablishmentRulesService.getByEstablishment(establishment.id);
 
       if (!establishmentRules) {
         res.status(404).json({ error: "Nenhuma regra encontrada" });
@@ -234,17 +242,24 @@ const EstablishmentController = {
         return;
       }
 
-      const actualRules = await EstablishmentRulesService.getByEstablishment(establishment.id);
+      const actualRules = await EstablishmentRulesService.getByEstablishment(
+        establishment.id,
+      );
 
       if (!actualRules) {
         res.status(404).json({ error: "Nenhuma regra encontrada" });
         return;
       }
 
-      const editEstablishmentRules = await EstablishmentRulesService.edit(req.params.id, body);
+      const editEstablishmentRules = await EstablishmentRulesService.edit(
+        req.params.id,
+        body,
+      );
 
       if (!editEstablishmentRules) {
-        res.status(500).json({ error: "Erro ao editar as regras do estabelecimento" });
+        res
+          .status(500)
+          .json({ error: "Erro ao editar as regras do estabelecimento" });
         return;
       }
 
@@ -253,7 +268,8 @@ const EstablishmentController = {
         message: "Regras do Estabelecimento editado com sucesso",
         rules: {
           id: editEstablishmentRules.id ?? actualRules.id,
-          establishmentId: editEstablishmentRules.establishmentId ?? actualRules.id,
+          establishmentId:
+            editEstablishmentRules.establishmentId ?? actualRules.id,
           videoLimit: editEstablishmentRules.videoLimit ?? actualRules.id,
           picturesLimit: editEstablishmentRules.picturesLimit ?? actualRules.id,
         },

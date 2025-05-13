@@ -8,16 +8,17 @@ import EstablishmentRulesService from "../services/EstablishmentRulesService";
 const ProductController = {
   create: async (req: Request, res: Response) => {
     try {
-      const estabelishment = await EstablishmentService.getWithId(req.body.establishmentId);
+      const estabelishment = await EstablishmentService.getWithId(
+        req.body.establishmentId,
+      );
 
       if (!estabelishment) {
         res.status(404).json({ error: "Estabelecimento não encontrado" });
         return;
       }
 
-      const estabelishmentRules = await EstablishmentRulesService.getByEstablishment(
-        estabelishment.id
-      );
+      const estabelishmentRules =
+        await EstablishmentRulesService.getByEstablishment(estabelishment.id);
 
       if (estabelishmentRules) {
         /**
@@ -25,7 +26,9 @@ const ProductController = {
          * Como não foi especificado, foi considerado 4 imagens e 1 video por produto.
          */
 
-        const products = await ProductService.getCountByEstablishment(estabelishment.id);
+        const products = await ProductService.getCountByEstablishment(
+          estabelishment.id,
+        );
 
         const pictures = products * 4;
         const videos = products * 1;
@@ -44,7 +47,7 @@ const ProductController = {
       const newproduct = await ProductService.create(
         req.body.name,
         req.body.price,
-        req.body.establishmentId
+        req.body.establishmentId,
       );
 
       if (!newproduct) {
@@ -175,7 +178,7 @@ const ProductController = {
   listOfEstablishment: async (req: Request, res: Response) => {
     try {
       const estabelishment = await EstablishmentService.getWithId(
-        req.params.establishment as string
+        req.params.establishment as string,
       );
 
       if (!estabelishment) {
@@ -183,7 +186,9 @@ const ProductController = {
         return;
       }
 
-      const products = await ProductService.getByEstablishment(req.params.establishment as string);
+      const products = await ProductService.getByEstablishment(
+        req.params.establishment as string,
+      );
 
       if (!products) {
         res.status(500).json({ error: "Erro ao listar produtos" });

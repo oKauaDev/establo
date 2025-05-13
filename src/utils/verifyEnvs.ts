@@ -9,5 +9,7 @@ for (const env of envs) {
 }
 
 if (notfound.length > 0) {
-  throw new Error(`As seguintes variáveis de ambiente não foram definidas: ${notfound.join(", ")}`);
+  throw new Error(
+    `As seguintes variáveis de ambiente não foram definidas: ${notfound.join(", ")}`,
+  );
 }

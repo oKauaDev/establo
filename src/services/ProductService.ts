@@ -15,7 +15,9 @@ const TABLE_NAME = "Product";
 const ProductService = {
   getWithId: async (id: string) => {
     try {
-      const { Item } = await ddb.send(new GetCommand({ TableName: TABLE_NAME, Key: { id } }));
+      const { Item } = await ddb.send(
+        new GetCommand({ TableName: TABLE_NAME, Key: { id } }),
+      );
       return Item as ProductType | undefined;
     } catch (error) {
       console.error(error);
@@ -36,7 +38,7 @@ const ProductService = {
         new PutCommand({
           TableName: TABLE_NAME,
           Item: product,
-        })
+        }),
       );
       return product;
     } catch (error) {
@@ -52,11 +54,11 @@ const ProductService = {
         .join(", ");
 
       const expressionAttributeValues = Object.fromEntries(
-        Object.entries(data).map(([k, v]) => [`:${k}`, v])
+        Object.entries(data).map(([k, v]) => [`:${k}`, v]),
       );
 
       const expressionAttributeNames = Object.fromEntries(
-        Object.keys(data).map((k) => [`#${k}`, k])
+        Object.keys(data).map((k) => [`#${k}`, k]),
       );
 
       const { Attributes } = await ddb.send(
@@ -67,7 +69,7 @@ const ProductService = {
           ExpressionAttributeNames: expressionAttributeNames,
           ExpressionAttributeValues: expressionAttributeValues,
           ReturnValues: "ALL_NEW",
-        })
+        }),
       );
 
       return Attributes as ProductType | undefined;
@@ -83,7 +85,7 @@ const ProductService = {
         new DeleteCommand({
           TableName: TABLE_NAME,
           Key: { id },
-        })
+        }),
       );
       return true;
     } catch (error) {
@@ -94,7 +96,9 @@ const ProductService = {
 
   all: async () => {
     try {
-      const { Items } = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
+      const { Items } = await ddb.send(
+        new ScanCommand({ TableName: TABLE_NAME }),
+      );
       return Items as ProductType[] | undefined;
     } catch (error) {
       console.error(error);
@@ -114,7 +118,7 @@ const ProductService = {
           FilterExpression: filterExpression,
           ExpressionAttributeValues: expressionAttributeValue,
           ExpressionAttributeNames: expressionAttributeName,
-        })
+        }),
       );
 
       return Items as ProductType[] | undefined;
@@ -137,7 +141,7 @@ const ProductService = {
           ExpressionAttributeValues: expressionAttributeValue,
           ExpressionAttributeNames: expressionAttributeName,
           Select: "COUNT",
-        })
+        }),
       );
 
       return Count ?? 0;

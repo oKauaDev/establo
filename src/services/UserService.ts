@@ -6,8 +6,8 @@ import {
   UpdateCommand,
   DeleteCommand,
 } from "@aws-sdk/lib-dynamodb";
-import ddb from "../aws/dynamodbClient";
 import { v4 as uuid } from "uuid";
+import ddb from "../aws/dynamodbClient";
 import { UserType } from "../types/User";
 
 const TABLE_NAME = "User";
