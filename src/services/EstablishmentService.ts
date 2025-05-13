@@ -44,6 +44,38 @@ const EstablishmentService = {
       return undefined;
     }
   },
+
+  edit: async (id: string, data: Partial<EstablishmentType>) => {
+    try {
+      const updateExpression = Object.keys(data)
+        .map((key) => `#${key} = :${key}`)
+        .join(", ");
+
+      const expressionAttributeValues = Object.fromEntries(
+        Object.entries(data).map(([k, v]) => [`:${k}`, v])
+      );
+
+      const expressionAttributeNames = Object.fromEntries(
+        Object.keys(data).map((k) => [`#${k}`, k])
+      );
+
+      const { Attributes } = await ddb.send(
+        new UpdateCommand({
+          TableName: TABLE_NAME,
+          Key: { id },
+          UpdateExpression: `SET ${updateExpression}`,
+          ExpressionAttributeNames: expressionAttributeNames,
+          ExpressionAttributeValues: expressionAttributeValues,
+          ReturnValues: "ALL_NEW",
+        })
+      );
+
+      return Attributes as EstablishmentType | undefined;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  },
 };
 
 export default EstablishmentService;

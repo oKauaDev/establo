@@ -89,3 +89,34 @@ describe("POST /establishment/find/:id", () => {
     expect(res.body.establishment.type).toBe("shopping");
   });
 });
+
+describe("PUT /establishment/edit/:id", () => {
+  it("should return 404", async () => {
+    const res = await request(app).put("/establishment/edit/notexist").send({
+      name: "Paul Doe",
+    });
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).put(`/establishment/edit/${establishmentId}`).send({
+      name: "EditedName",
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("establishment");
+
+    expect(res.body.establishment).toHaveProperty("id");
+    expect(res.body.establishment).toHaveProperty("name");
+    expect(res.body.establishment).toHaveProperty("ownerId");
+    expect(res.body.establishment).toHaveProperty("type");
+
+    expect(res.body.establishment.name).toBe("EditedName");
+    expect(res.body.establishment.ownerId).toBe(ownerId);
+    expect(res.body.establishment.type).toBe("shopping");
+  });
+});

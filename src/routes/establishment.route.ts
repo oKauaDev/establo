@@ -6,7 +6,7 @@ import EstablishmentController from "../controllers/EstablishmentController";
 const router = Router();
 
 // POST /establishment/create
-const createUserSchema = z.object({
+const createEstablishmentSchema = z.object({
   name: z
     .string()
     .min(3, "O nome do estabelecimento deve ter pelo menos 3 caracteres")
@@ -15,10 +15,23 @@ const createUserSchema = z.object({
   type: z.enum(["shopping", "local"]),
 });
 
-router.post("/create", zodschema(createUserSchema), EstablishmentController.create);
+router.post("/create", zodschema(createEstablishmentSchema), EstablishmentController.create);
 
 // GET /establishment/find/:id
 router.get("/find/:id", EstablishmentController.get);
+
+// PUT /establishment/edit/:id
+const editEstablishmentSchema = z.object({
+  name: z
+    .string()
+    .min(3, "O nome do estabelecimento deve ter pelo menos 3 caracteres")
+    .max(255, "O nome do estabelecimento deve ter no máximo 255 caracteres")
+    .optional(),
+  ownerId: z.string().uuid("O id do proprietário é inválido").optional(),
+  type: z.enum(["shopping", "local"]).optional(),
+});
+
+router.put("/edit/:id", zodschema(editEstablishmentSchema), EstablishmentController.edit);
 
 export default {
   path: "/establishment",
