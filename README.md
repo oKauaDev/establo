@@ -1,4 +1,4 @@
-# 🚀 API de Gerenciamento de Usuários e Estabelecimentos
+# 🚀 Estabo | 🧪 Teste Técnico – Backend Developer
 
 API RESTful para gestão de usuários, estabelecimentos, produtos e regras comerciais, desenvolvida em Node.js com TypeScript e DynamoDB.
 
@@ -40,9 +40,9 @@ PORT=3000
 
 ## 🏗 Estrutura do Projeto
 
-```md
+```txt
 tests/
-└── \*.test.ts
+└── *.test.ts
 src/
 ├── aws/
 ├── controllers/
@@ -121,7 +121,7 @@ Tabelas usadas:
 - `ProductsTable`
 - `RulesTable`
 
-Não se preucupe em criar as tabelas, o proprío código irá verificar se as tabelas existem, e se não existem, vai criar elas automaticamente.
+> Não se preucupe em criar as tabelas, o proprío código irá verificar se as tabelas existem, e se não existem, vai criar elas automaticamente.
 
 ## 🧪 Testes
 

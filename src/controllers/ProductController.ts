@@ -3,6 +3,7 @@ import errorToString from "../utils/errorToString";
 import { ProductType } from "../types/Product";
 import ProductService from "../services/ProductService";
 import EstablishmentService from "../services/EstablishmentService";
+import EstablishmentRulesService from "../services/EstablishmentRulesService";
 
 const ProductController = {
   create: async (req: Request, res: Response) => {
@@ -12,6 +13,32 @@ const ProductController = {
       if (!estabelishment) {
         res.status(404).json({ error: "Estabelecimento não encontrado" });
         return;
+      }
+
+      const estabelishmentRules = await EstablishmentRulesService.getByEstablishment(
+        estabelishment.id
+      );
+
+      if (estabelishmentRules) {
+        /**
+         * Fiquei sem muitas ideias de como desenvolver esse sistema de regras,
+         * Como não foi especificado, foi considerado 4 imagens e 1 video por produto.
+         */
+
+        const products = await ProductService.getCountByEstablishment(estabelishment.id);
+
+        const pictures = products * 4;
+        const videos = products * 1;
+
+        if (pictures > estabelishmentRules.picturesLimit) {
+          res.status(403).json({ error: "Limite de imagens atingido" });
+          return;
+        }
+
+        if (videos > estabelishmentRules.videoLimit) {
+          res.status(403).json({ error: "Limite de videos atingido" });
+          return;
+        }
       }
 
       const newproduct = await ProductService.create(

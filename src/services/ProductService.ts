@@ -123,6 +123,29 @@ const ProductService = {
       return undefined;
     }
   },
+
+  getCountByEstablishment: async (id: string) => {
+    try {
+      const filterExpression = "#establishmentId = :establishmentId";
+      const expressionAttributeValue = { ":establishmentId": id };
+      const expressionAttributeName = { "#establishmentId": "establishmentId" };
+
+      const { Count } = await ddb.send(
+        new ScanCommand({
+          TableName: TABLE_NAME,
+          FilterExpression: filterExpression,
+          ExpressionAttributeValues: expressionAttributeValue,
+          ExpressionAttributeNames: expressionAttributeName,
+          Select: "COUNT",
+        })
+      );
+
+      return Count ?? 0;
+    } catch (error) {
+      console.error(error);
+      return 0;
+    }
+  },
 };
 
 export default ProductService;
