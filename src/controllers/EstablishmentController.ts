@@ -16,7 +16,7 @@ const EstablishmentController = {
       }
 
       if (user.type !== "owner") {
-        res.status(400).json({ error: "O usuário precisa ser do tipo proprietário" });
+        res.status(403).json({ error: "O usuário precisa ser do tipo proprietário" });
         return;
       }
 

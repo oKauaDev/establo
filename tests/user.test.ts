@@ -116,7 +116,7 @@ describe("PUT /user/list", () => {
     expect(res.body).toHaveProperty("message");
     expect(res.body).toHaveProperty("users");
 
-    expect([1, 2, 3]).toContain(res.body.users.length);
+    expect([1, 2, 3, 4]).toContain(res.body.users.length);
 
     expect(res.body.users[0]).toHaveProperty("id");
     expect(res.body.users[0]).toHaveProperty("name");
@@ -151,6 +151,6 @@ describe("PUT /user/list after delete user", () => {
     expect(res.body).toHaveProperty("message");
     expect(res.body).toHaveProperty("users");
 
-    expect([0, 1, 2]).toContain(res.body.users.length);
+    expect([0, 1, 2, 3]).toContain(res.body.users.length);
   });
 });

@@ -3,6 +3,7 @@ import app from "../src/app";
 
 let establishmentId: string;
 let ownerId: string;
+let baseId: string;
 
 beforeAll(async () => {
   const res = await request(app).post("/user/create").send({
@@ -26,6 +27,28 @@ beforeAll(async () => {
   expect(res.body.user.type).toBe("owner");
 
   ownerId = res.body.user.id;
+
+  const res2 = await request(app).post("/user/create").send({
+    name: "BaseUser",
+    email: "base.user@gmail.com",
+    type: "customer",
+  });
+
+  expect(res2.statusCode).toBe(201);
+  expect(res2.body).toHaveProperty("success");
+  expect(res2.body).toHaveProperty("message");
+  expect(res2.body).toHaveProperty("user");
+
+  expect(res2.body.user).toHaveProperty("id");
+  expect(res2.body.user).toHaveProperty("name");
+  expect(res2.body.user).toHaveProperty("email");
+  expect(res2.body.user).toHaveProperty("type");
+
+  expect(res2.body.user.name).toBe("BaseUser");
+  expect(res2.body.user.email).toBe("base.user@gmail.com");
+  expect(res2.body.user.type).toBe("customer");
+
+  baseId = res2.body.user.id;
 });
 
 describe("POST /establishment/create", () => {
@@ -36,6 +59,16 @@ describe("POST /establishment/create", () => {
 
     expect(res.statusCode).toBe(400);
     expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 403", async () => {
+    const res = await request(app).post("/establishment/create").send({
+      name: "Test01",
+      ownerId: baseId,
+      type: "shopping",
+    });
+
+    expect(res.statusCode).toBe(403);
   });
 
   it("should return 200", async () => {
