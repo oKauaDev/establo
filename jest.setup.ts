@@ -20,11 +20,10 @@ async function clearDynamoDb(table: string) {
         });
 
         await client.send(deleteCommand);
-        console.log(`Item com ID ${item.id.S} deletado da tabela ${table}.`);
       }
     }
   } catch (error) {
-    console.error(`Erro ao limpar a tabela ${table}:`, error);
+    console.error(error);
   }
 }
 

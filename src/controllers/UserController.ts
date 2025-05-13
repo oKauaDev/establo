@@ -37,6 +37,30 @@ const UserController = {
       res.status(500).json({ error: errorToString(error) });
     }
   },
+
+  get: async (req: Request, res: Response) => {
+    try {
+      const user = await UserService.getWithId(req.params.id);
+
+      if (!user) {
+        res.status(404).json({ error: "Usuário não encontrado" });
+        return;
+      }
+
+      res.json({
+        success: true,
+        message: "Usuário encontrado com sucesso",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          type: user.type,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
 };
 
 export default UserController;

@@ -16,6 +16,8 @@ const createUserSchema = z.object({
 
 router.post("/create", zodschema(createUserSchema), UserController.create);
 
+router.get("/find/:id", UserController.get);
+
 export default {
   path: "/user",
   router,
