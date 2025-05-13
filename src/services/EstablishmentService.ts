@@ -76,6 +76,66 @@ const EstablishmentService = {
       return undefined;
     }
   },
+
+  delete: async (id: string) => {
+    try {
+      await ddb.send(
+        new DeleteCommand({
+          TableName: TABLE_NAME,
+          Key: { id },
+        })
+      );
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  },
+
+  all: async () => {
+    try {
+      const { Items } = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
+      return Items as EstablishmentType[] | undefined;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  },
+
+  filter: async (filters: Partial<{ name: string; type: EstablishmentType["type"] }>) => {
+    const filterExpressions: string[] = [];
+    const expressionAttributeValues: Record<string, any> = {};
+    const expressionAttributeNames: Record<string, string> = {};
+
+    if (filters.name) {
+      filterExpressions.push("contains(#name, :name)");
+      expressionAttributeValues[":name"] = filters.name;
+      expressionAttributeNames["#name"] = "name";
+    }
+
+    if (filters.type) {
+      filterExpressions.push("#type = :type");
+      expressionAttributeValues[":type"] = filters.type;
+      expressionAttributeNames["#type"] = "type";
+    }
+
+    const command = new ScanCommand({
+      TableName: TABLE_NAME,
+      FilterExpression: filterExpressions.length > 0 ? filterExpressions.join(" AND ") : undefined,
+      ExpressionAttributeValues:
+        Object.keys(expressionAttributeValues).length > 0 ? expressionAttributeValues : undefined,
+      ExpressionAttributeNames:
+        Object.keys(expressionAttributeNames).length > 0 ? expressionAttributeNames : undefined,
+    });
+
+    try {
+      const { Items } = await ddb.send(command);
+      return Items as EstablishmentType[] | undefined;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  },
 };
 
 export default EstablishmentService;

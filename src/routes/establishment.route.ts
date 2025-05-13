@@ -33,6 +33,12 @@ const editEstablishmentSchema = z.object({
 
 router.put("/edit/:id", zodschema(editEstablishmentSchema), EstablishmentController.edit);
 
+// DELETE /user/establishment/:id
+router.delete("/delete/:id", EstablishmentController.delete);
+
+// GET /user/establishment/query
+router.get("/query", EstablishmentController.query);
+
 export default {
   path: "/establishment",
   router,

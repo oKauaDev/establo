@@ -6,8 +6,8 @@ let ownerId: string;
 
 beforeAll(async () => {
   const res = await request(app).post("/user/create").send({
-    name: "John Doe",
-    email: "john.doe@gmail.com",
+    name: "Enderson",
+    email: "ederson.doe@gmail.com",
     type: "owner",
   });
 
@@ -21,8 +21,8 @@ beforeAll(async () => {
   expect(res.body.user).toHaveProperty("email");
   expect(res.body.user).toHaveProperty("type");
 
-  expect(res.body.user.name).toBe("John Doe");
-  expect(res.body.user.email).toBe("john.doe@gmail.com");
+  expect(res.body.user.name).toBe("Enderson");
+  expect(res.body.user.email).toBe("ederson.doe@gmail.com");
   expect(res.body.user.type).toBe("owner");
 
   ownerId = res.body.user.id;
@@ -118,5 +118,60 @@ describe("PUT /establishment/edit/:id", () => {
     expect(res.body.establishment.name).toBe("EditedName");
     expect(res.body.establishment.ownerId).toBe(ownerId);
     expect(res.body.establishment.type).toBe("shopping");
+  });
+});
+
+describe("PUT /establishment/query", () => {
+  it("should return 500", async () => {
+    const res = await request(app).get("/establishment/query?type=teste");
+
+    expect(res.statusCode).toBe(500);
+    expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).get("/establishment/query");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("establishments");
+
+    expect(res.body.establishments).toHaveLength(1);
+
+    expect(res.body.establishments[0]).toHaveProperty("id");
+    expect(res.body.establishments[0]).toHaveProperty("name");
+    expect(res.body.establishments[0]).toHaveProperty("ownerId");
+    expect(res.body.establishments[0]).toHaveProperty("type");
+  });
+});
+
+describe("PUT /establishment/delete/:id", () => {
+  it("should return 404", async () => {
+    const res = await request(app).delete("/establishment/delete/notexist");
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).delete(`/establishment/delete/${establishmentId}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("PUT /establishment/query deleted establishment", () => {
+  it("should return 200", async () => {
+    const res = await request(app).get("/establishment/query");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("establishments");
+
+    expect(res.body.establishments).toHaveLength(0);
   });
 });

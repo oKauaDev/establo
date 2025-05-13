@@ -3,6 +3,7 @@ import errorToString from "../utils/errorToString";
 import UserService from "../services/UserService";
 import EstablishmentService from "../services/EstablishmentService";
 import { EstablishmentType } from "../types/Establishment";
+import { z } from "zod";
 
 const EstablishmentController = {
   create: async (req: Request, res: Response) => {
@@ -101,6 +102,71 @@ const EstablishmentController = {
           type: editEstablishment.type,
         },
       });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
+
+  delete: async (req: Request, res: Response) => {
+    try {
+      const establishment = await EstablishmentService.getWithId(req.params.id);
+
+      if (!establishment) {
+        res.status(404).json({ error: "Estabelecimento não encontrado" });
+        return;
+      }
+
+      const deleted = await EstablishmentService.delete(req.params.id);
+
+      if (!deleted) {
+        res.status(500).json({ error: "Erro ao deletar o estabelecimento" });
+        return;
+      }
+
+      res.json({
+        success: true,
+        message: "Estabelecimento deletado com sucesso",
+      });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
+
+  query: async (req: Request, res: Response) => {
+    try {
+      const querys = req.query;
+      const name = querys.name ? querys.name.toString() : undefined;
+      const type = querys.type ? querys.type.toString() : undefined;
+
+      const zType = z.enum(["shopping", "local"]).optional().parse(type);
+
+      if (!name && !type) {
+        const establishments = await EstablishmentService.all();
+
+        if (!establishments) {
+          res.status(404).json({ error: "Nenhum estabelecimento encontrado" });
+          return;
+        }
+
+        res.json({
+          success: true,
+          message: "Estabelecimentos encontrados com sucesso",
+          establishments: establishments,
+        });
+      } else {
+        const establishments = await EstablishmentService.filter({ name, type: zType });
+
+        if (!establishments) {
+          res.status(404).json({ error: "Nenhum estabelecimento encontrado" });
+          return;
+        }
+
+        res.json({
+          success: true,
+          message: "Estabelecimentos encontrados com sucesso",
+          establishments: establishments,
+        });
+      }
     } catch (error) {
       res.status(500).json({ error: errorToString(error) });
     }
