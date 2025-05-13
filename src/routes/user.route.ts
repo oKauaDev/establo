@@ -5,6 +5,7 @@ import UserController from "../controllers/UserController";
 
 const router = Router();
 
+// POST /user/create
 const createUserSchema = z.object({
   name: z
     .string()
@@ -16,8 +17,10 @@ const createUserSchema = z.object({
 
 router.post("/create", zodschema(createUserSchema), UserController.create);
 
+// GET /user/find/:id
 router.get("/find/:id", UserController.get);
 
+// PUT /user/edit/:id
 const editUserSchema = z.object({
   name: z
     .string()
@@ -30,8 +33,10 @@ const editUserSchema = z.object({
 
 router.put("/edit/:id", zodschema(editUserSchema), UserController.edit);
 
+// DELETE /user/delete/:id
 router.delete("/delete/:id", UserController.delete);
 
+// GET /user/list
 router.get("/list", UserController.list);
 
 export default {
