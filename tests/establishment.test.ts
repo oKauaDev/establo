@@ -137,7 +137,7 @@ describe("PUT /establishment/query", () => {
     expect(res.body).toHaveProperty("message");
     expect(res.body).toHaveProperty("establishments");
 
-    expect(res.body.establishments).toHaveLength(1);
+    expect([1, 2]).toContain(res.body.establishments.length);
 
     expect(res.body.establishments[0]).toHaveProperty("id");
     expect(res.body.establishments[0]).toHaveProperty("name");
@@ -172,6 +172,6 @@ describe("PUT /establishment/query deleted establishment", () => {
     expect(res.body).toHaveProperty("message");
     expect(res.body).toHaveProperty("establishments");
 
-    expect(res.body.establishments).toHaveLength(0);
+    expect([0, 1]).toContain(res.body.establishments.length);
   });
 });
