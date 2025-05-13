@@ -31,4 +31,5 @@ beforeAll(async () => {
   await clearDynamoDb("User");
   await clearDynamoDb("Establishment");
   await clearDynamoDb("Product");
+  await clearDynamoDb("EstablishmentRules");
 });

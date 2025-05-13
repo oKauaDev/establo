@@ -8,6 +8,8 @@ import {
 import ddb from "../aws/dynamodbClient";
 import { v4 as uuid } from "uuid";
 import { EstablishmentType } from "../types/Establishment";
+import { TransactWriteItemsCommand } from "@aws-sdk/client-dynamodb";
+import EstablishmentRulesService from "./EstablishmentRulesService";
 
 const TABLE_NAME = "Establishment";
 
@@ -30,11 +32,35 @@ const EstablishmentService = {
       type: type as "shopping" | "local",
     };
 
+    const rulesCommand = EstablishmentRulesService.getPutCommandCreate(establishment.id, 5, 5);
+
     try {
       await ddb.send(
-        new PutCommand({
-          TableName: TABLE_NAME,
-          Item: establishment,
+        new TransactWriteItemsCommand({
+          TransactItems: [
+            {
+              Put: {
+                TableName: TABLE_NAME,
+                Item: {
+                  id: { S: establishment.id },
+                  name: { S: establishment.name },
+                  ownerId: { S: establishment.ownerId },
+                  type: { S: establishment.type },
+                },
+              },
+            },
+            {
+              Put: {
+                TableName: rulesCommand.TableName,
+                Item: {
+                  id: { S: rulesCommand.Item.id.S },
+                  establishmentId: { S: rulesCommand.Item.establishmentId.S },
+                  picturesLimit: { N: rulesCommand.Item.picturesLimit.N },
+                  videoLimit: { N: rulesCommand.Item.videoLimit.N },
+                },
+              },
+            },
+          ],
         })
       );
       return establishment as EstablishmentType | undefined;
