@@ -1,4 +1,7 @@
 import "dotenv/config";
+import "./utils/checkAndCreateTables";
+import "./utils/verifyEnvs";
+
 import express from "express";
 import serverRoute from "./routes/server.route";
 import userRoute from "./routes/user.route";

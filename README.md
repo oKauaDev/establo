@@ -114,14 +114,14 @@ Você pode importar também para o postman, o arquivo está em `requests/Establo
 
 ## 📊 Configuração do DynamoDB
 
-1. Crie tabelas com os nomes:
+Tabelas usadas:
 
-   - `UsersTable`
-   - `EstablishmentsTable`
-   - `ProductsTable`
-   - `RulesTable`
+- `UsersTable`
+- `EstablishmentsTable`
+- `ProductsTable`
+- `RulesTable`
 
-2. Defina `id` como chave primária em todas as tabelas
+Não se preucupe em criar as tabelas, o proprío código irá verificar se as tabelas existem, e se não existem, vai criar elas automaticamente.
 
 ## 🧪 Testes
 
