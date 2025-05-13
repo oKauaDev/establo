@@ -30,6 +30,10 @@ const editUserSchema = z.object({
 
 router.put("/edit/:id", zodschema(editUserSchema), UserController.edit);
 
+router.delete("/delete/:id", UserController.delete);
+
+router.get("/list", UserController.list);
+
 export default {
   path: "/user",
   router,

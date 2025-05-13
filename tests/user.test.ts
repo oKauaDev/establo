@@ -21,7 +21,7 @@ describe("POST /user/create", () => {
       type: "owner",
     });
 
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty("success");
     expect(res.body).toHaveProperty("message");
     expect(res.body).toHaveProperty("user");
@@ -104,5 +104,53 @@ describe("PUT /user/edit/:id", () => {
     expect(res.body.user.name).toBe("Paul Doe");
     expect(res.body.user.email).toBe("john.doe@gmail.com");
     expect(res.body.user.type).toBe("owner");
+  });
+});
+
+describe("PUT /user/list", () => {
+  it("should return 200", async () => {
+    const res = await request(app).get("/user/list");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("users");
+
+    expect(res.body.users).toHaveLength(1);
+
+    expect(res.body.users[0]).toHaveProperty("id");
+    expect(res.body.users[0]).toHaveProperty("name");
+    expect(res.body.users[0]).toHaveProperty("email");
+    expect(res.body.users[0]).toHaveProperty("type");
+  });
+});
+
+describe("PUT /user/delete/:id", () => {
+  it("should return 404", async () => {
+    const res = await request(app).delete("/user/delete/notexist");
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).delete(`/user/delete/${userId}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("PUT /user/list after delete user", () => {
+  it("should return 200", async () => {
+    const res = await request(app).get("/user/list");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("users");
+
+    expect(res.body.users).toHaveLength(0);
   });
 });

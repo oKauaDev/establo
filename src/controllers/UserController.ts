@@ -24,7 +24,7 @@ const UserController = {
         return;
       }
 
-      res.json({
+      res.status(201).json({
         success: true,
         message: "Usuário criado com sucesso",
         user: {
@@ -94,6 +94,50 @@ const UserController = {
           email: editUser.email,
           type: editUser.type,
         },
+      });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
+
+  delete: async (req: Request, res: Response) => {
+    try {
+      const user = await UserService.getWithId(req.params.id);
+
+      if (!user) {
+        res.status(404).json({ error: "Usuário não encontrado" });
+        return;
+      }
+
+      const deleted = await UserService.delete(req.params.id);
+
+      if (!deleted) {
+        res.status(500).json({ error: "Erro ao deletar usuário" });
+        return;
+      }
+
+      res.json({
+        success: true,
+        message: "Usuário deletado com sucesso",
+      });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
+
+  list: async (req: Request, res: Response) => {
+    try {
+      const users = await UserService.all();
+
+      if (!users) {
+        res.status(500).json({ error: "Erro ao listar usuários" });
+        return;
+      }
+
+      res.json({
+        success: true,
+        message: "Usuários listados com sucesso",
+        users,
       });
     } catch (error) {
       res.status(500).json({ error: errorToString(error) });

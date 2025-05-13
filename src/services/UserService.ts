@@ -1,7 +1,12 @@
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import ddb from "../aws/dynamodbClient";
 import { v4 as uuid } from "uuid";
-import { QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DeleteItemCommand,
+  QueryCommand,
+  ScanCommand,
+  UpdateItemCommand,
+} from "@aws-sdk/client-dynamodb";
 import { UserType } from "../types/User";
 
 const TABLE_NAME = "User";
@@ -82,7 +87,7 @@ const UserService = {
       }
 
       const updateCommand = new UpdateItemCommand({
-        TableName: "User",
+        TableName: TABLE_NAME,
         Key: {
           id: { S: id },
         },
@@ -100,6 +105,47 @@ const UserService = {
         email: result.Attributes?.email.S ?? "",
         type: result.Attributes?.type.S ?? "",
       } as UserType | undefined;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  },
+
+  delete: async (id: string) => {
+    try {
+      const deleteCommand = new DeleteItemCommand({
+        TableName: TABLE_NAME,
+        Key: {
+          id: { S: id },
+        },
+      });
+
+      const result = await ddb.send(deleteCommand);
+
+      if (result.$metadata.httpStatusCode === 200) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  },
+
+  all: async () => {
+    try {
+      const command = new ScanCommand({ TableName: TABLE_NAME });
+      const { Items } = await ddb.send(command);
+
+      const users = Items?.map((item) => ({
+        id: item.id.S ?? "",
+        name: item.name.S ?? "",
+        email: item.email.S ?? "",
+        type: item.type.S ?? "",
+      }));
+
+      return users as UserType[] | undefined;
     } catch (error) {
       console.error(error);
       return undefined;
