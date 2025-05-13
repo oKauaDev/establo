@@ -43,6 +43,30 @@ const EstablishmentController = {
       res.status(500).json({ error: errorToString(error) });
     }
   },
+
+  get: async (req: Request, res: Response) => {
+    try {
+      const establishment = await EstablishmentService.getWithId(req.params.id);
+
+      if (!establishment) {
+        res.status(404).json({ error: "Estabelecimento não encontrado" });
+        return;
+      }
+
+      res.json({
+        success: true,
+        message: "Estabelecimento encontrado com sucesso",
+        establishment: {
+          id: establishment.id,
+          name: establishment.name,
+          ownerId: establishment.ownerId,
+          type: establishment.type,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
 };
 
 export default EstablishmentController;

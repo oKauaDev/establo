@@ -5,7 +5,7 @@ import EstablishmentController from "../controllers/EstablishmentController";
 
 const router = Router();
 
-// POST /user/create
+// POST /establishment/create
 const createUserSchema = z.object({
   name: z
     .string()
@@ -16,6 +16,9 @@ const createUserSchema = z.object({
 });
 
 router.post("/create", zodschema(createUserSchema), EstablishmentController.create);
+
+// GET /establishment/find/:id
+router.get("/find/:id", EstablishmentController.get);
 
 export default {
   path: "/establishment",

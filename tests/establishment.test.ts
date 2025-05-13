@@ -62,3 +62,30 @@ describe("POST /establishment/create", () => {
     establishmentId = res.body.establishment.id;
   });
 });
+
+describe("POST /establishment/find/:id", () => {
+  it("should return 404", async () => {
+    const res = await request(app).get("/establishment/find/notexist");
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).get(`/establishment/find/${establishmentId}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("establishment");
+
+    expect(res.body.establishment).toHaveProperty("id");
+    expect(res.body.establishment).toHaveProperty("name");
+    expect(res.body.establishment).toHaveProperty("ownerId");
+    expect(res.body.establishment).toHaveProperty("type");
+
+    expect(res.body.establishment.name).toBe("Test01");
+    expect(res.body.establishment.ownerId).toBe(ownerId);
+    expect(res.body.establishment.type).toBe("shopping");
+  });
+});
