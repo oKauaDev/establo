@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "npm run services:up && ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "format": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
-    "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'"
+    "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
+    "services:up": "docker-compose up -d",
+    "services:down": "docker-compose down"
   },
   "keywords": [],
   "author": "",

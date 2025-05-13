@@ -1,4 +1,4 @@
-const envs = ["AWS_REGION"];
+const envs = ["AWS_REGION", "NODE_ENV"];
 
 const notfound: string[] = [];
 

@@ -1,6 +1,5 @@
-import { DeleteItemCommand, DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-
-const client = new DynamoDBClient({ region: "us-east-2" });
+import { DeleteItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import ddb from "./src/aws/dynamodbClient";
 
 async function clearDynamoDb(table: string) {
   try {
@@ -8,7 +7,7 @@ async function clearDynamoDb(table: string) {
       TableName: table,
     });
 
-    const data = await client.send(scanCommand);
+    const data = await ddb.send(scanCommand);
 
     if (data.Items) {
       for (const item of data.Items) {
@@ -19,7 +18,7 @@ async function clearDynamoDb(table: string) {
           },
         });
 
-        await client.send(deleteCommand);
+        await ddb.send(deleteCommand);
       }
     }
   } catch (error) {

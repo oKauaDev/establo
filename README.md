@@ -1,22 +1,22 @@
-# 🚀 Estabo | 🧪 Teste Técnico – Backend Developer
+# 🧪 Estabo | Teste Técnico – Backend Developer
 
 API RESTful para gestão de usuários, estabelecimentos, produtos e regras comerciais, desenvolvida em Node.js com TypeScript e DynamoDB.
 
 ## 🛠 Tecnologias utilizadas
 
+- **Express.js** (roteamento)
 - **Node.js** v18+
 - **TypeScript**
 - **AWS DynamoDB**
-- **UUID** (geração de IDs)
-- **Express.js** (roteamento)
-- **Dotenv** (variáveis de ambiente)
+- **Docker** (Para executar o DynamoDB localmente)
 - **Jest** (testes e2e de toda a aplicação)
+- **UUID** (geração de IDs)
+- **Dotenv** (variáveis de ambiente)
 
 ## ⚙️ Pré-requisitos
 
-- Conta AWS para DynamoDB
+- Conta AWS para DynamoDB ou o Docker instalado
 - Node.js e npm instalados
-- AWS CLI configurado (para acesso local ao DynamoDB)
 
 ## 🔧 Instalação
 
@@ -34,8 +34,10 @@ cp .env.example .env
 ## ⚙️ Variáveis de Ambiente
 
 ```env
-AWS_REGION=us-east-1
+NODE_ENV="development"
 PORT=3000
+AWS_REGION="us-east-2"
+DYNAMODB_ENDPOINT=http://localhost:8000 #pode remover no modo produção
 ```
 
 ## 🏗 Estrutura do Projeto
@@ -131,7 +133,9 @@ npm test
 
 ## 📌 Considerações
 
-- Todos os IDs são gerados como UUID v4
-- Validações de entrada implementadas em todos endpoints
-- Tratamento de erros centralizado
-- Documentação completa dos tipos TypeScript
+- Todos os IDs são gerados como UUID v4;
+- Validações de entrada implementadas em todos endpoints;
+- Tratamento de erros centralizado;
+- Documentação completa dos tipos TypeScript;
+- Validações das ENVS;
+- Validações e criações das tabelas automaticamente;
