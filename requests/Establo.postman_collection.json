@@ -1,0 +1,456 @@
+{
+	"info": {
+		"_postman_id": "f4b07366-fb59-4d99-b43e-34a164a1e19d",
+		"name": "Establo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21208149"
+	},
+	"item": [
+		{
+			"name": "user/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kauã Braz\",\r\n    \"email\": \"kauacomtil021@gmail.com\",\r\n    \"type\": \"owner\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/find/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/find/82b57ec9-537c-40f6-a1c2-8206fa8ae19f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"find",
+						"82b57ec9-537c-40f6-a1c2-8206fa8ae19f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/edit/:id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Teste de nome\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/edit/82b57ec9-537c-40f6-a1c2-8206fa8ae19f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"edit",
+						"82b57ec9-537c-40f6-a1c2-8206fa8ae19f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/delete/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/delete/9815460c-213b-4976-ab74-c780369b649a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"delete",
+						"9815460c-213b-4976-ab74-c780369b649a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test01\",\r\n    \"ownerId\": \"25d133cd-427e-4444-9841-7e1b50e3929c\",\r\n    \"type\": \"shopping\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/establishment/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/find/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/establishment/find/0342a7ea-37d3-48b9-b79d-dfeb7496acc0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"find",
+						"0342a7ea-37d3-48b9-b79d-dfeb7496acc0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/edit/:id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Teste de nome\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/establishment/edit/3a93fcaa-1654-43f7-a3e9-00bbb665cea9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"edit",
+						"3a93fcaa-1654-43f7-a3e9-00bbb665cea9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/delete/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/establishment/delete/9815460c-213b-4976-ab74-c780369b649a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"delete",
+						"9815460c-213b-4976-ab74-c780369b649a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/rules/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/establishment/rules/92297e0c-36a6-457a-bc6e-d745d9588297a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"rules",
+						"92297e0c-36a6-457a-bc6e-d745d9588297a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/rules/:id/edit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"picturesLimit\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/establishment/rules/92297e0c-36a6-457a-bc6e-d745d9588297/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"rules",
+						"92297e0c-36a6-457a-bc6e-d745d9588297",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "establishment/query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/establishment/query?name=ed&type=shopping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"establishment",
+						"query"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "ed"
+						},
+						{
+							"key": "type",
+							"value": "shopping"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Produto01\",\r\n    \"establishmentId\": \"d70172ac-e557-4f14-88f4-08f2ce92a72d\",\r\n    \"price\": 200\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/product/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/product/find/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/product/find/da895a9f-e0fa-4f5c-b028-260b93765cee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"find",
+						"da895a9f-e0fa-4f5c-b028-260b93765cee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/product/edit/:id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Product01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/product/edit/da895a9f-e0fa-4f5c-b028-260b93765cee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"edit",
+						"da895a9f-e0fa-4f5c-b028-260b93765cee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product/delete/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/product/delete/da895a9f-e0fa-4f5c-b028-260b93765cee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"delete",
+						"da895a9f-e0fa-4f5c-b028-260b93765cee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/product/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product/list/:establishmentId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/product/list/d70172ac-e557-4f14-88f4-08f2ce92a72d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"list",
+						"d70172ac-e557-4f14-88f4-08f2ce92a72d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
