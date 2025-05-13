@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import errorToString from "../utils/errorToString";
 import UserService from "../services/UserService";
+import { UserType } from "../types/User";
 
 const UserController = {
   create: async (req: Request, res: Response) => {
@@ -55,6 +56,43 @@ const UserController = {
           name: user.name,
           email: user.email,
           type: user.type,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({ error: errorToString(error) });
+    }
+  },
+
+  edit: async (req: Request, res: Response) => {
+    try {
+      const user = await UserService.getWithId(req.params.id);
+
+      if (!user) {
+        res.status(404).json({ error: "Usuário não encontrado" });
+        return;
+      }
+
+      let body: Partial<UserType> = {};
+
+      if (req.body.name) body.name = req.body.name;
+      if (req.body.email) body.email = req.body.email;
+      if (req.body.type) body.type = req.body.type;
+
+      const editUser = await UserService.edit(req.params.id, body);
+
+      if (!editUser) {
+        res.status(500).json({ error: "Erro ao editar usuário" });
+        return;
+      }
+
+      res.json({
+        success: true,
+        message: "Usuário editado com sucesso",
+        user: {
+          id: editUser.id,
+          name: editUser.name,
+          email: editUser.email,
+          type: editUser.type,
         },
       });
     } catch (error) {

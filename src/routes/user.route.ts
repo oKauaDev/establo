@@ -18,6 +18,18 @@ router.post("/create", zodschema(createUserSchema), UserController.create);
 
 router.get("/find/:id", UserController.get);
 
+const editUserSchema = z.object({
+  name: z
+    .string()
+    .min(3, "O nome deve ter pelo menos 3 caracteres")
+    .max(255, "O nome deve ter no máximo 255 caracteres")
+    .optional(),
+  email: z.string().email("O email é inválido").optional(),
+  type: z.enum(["owner", "customer"]).optional(),
+});
+
+router.put("/edit/:id", zodschema(editUserSchema), UserController.edit);
+
 export default {
   path: "/user",
   router,

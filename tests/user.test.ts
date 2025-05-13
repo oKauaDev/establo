@@ -49,7 +49,7 @@ describe("POST /user/create", () => {
   });
 });
 
-describe("POST /user/find", () => {
+describe("POST /user/find/:id", () => {
   it("should return 404", async () => {
     const res = await request(app).get("/user/find/notexist");
 
@@ -71,6 +71,37 @@ describe("POST /user/find", () => {
     expect(res.body.user).toHaveProperty("type");
 
     expect(res.body.user.name).toBe("John Doe");
+    expect(res.body.user.email).toBe("john.doe@gmail.com");
+    expect(res.body.user.type).toBe("owner");
+  });
+});
+
+describe("PUT /user/edit/:id", () => {
+  it("should return 404", async () => {
+    const res = await request(app).put("/user/edit/notexist").send({
+      name: "Paul Doe",
+    });
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toHaveProperty("error");
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).put(`/user/edit/${userId}`).send({
+      name: "Paul Doe",
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("user");
+
+    expect(res.body.user).toHaveProperty("id");
+    expect(res.body.user).toHaveProperty("name");
+    expect(res.body.user).toHaveProperty("email");
+    expect(res.body.user).toHaveProperty("type");
+
+    expect(res.body.user.name).toBe("Paul Doe");
     expect(res.body.user.email).toBe("john.doe@gmail.com");
     expect(res.body.user.type).toBe("owner");
   });
