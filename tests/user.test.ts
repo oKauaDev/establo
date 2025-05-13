@@ -6,7 +6,6 @@ describe("POST /user/create", () => {
     const res = await request(app).post("/user/create").send({
       name: "John Doe",
       email: "john.doe",
-      type: "owner",
     });
 
     expect(res.statusCode).toBe(400);
@@ -17,7 +16,6 @@ describe("POST /user/create", () => {
     const res = await request(app).post("/user/create").send({
       name: "John Doe",
       email: "john.doe@gmail.com",
-      password: "123456",
       type: "owner",
     });
 
@@ -42,7 +40,6 @@ describe("POST /user/create", () => {
     const res = await request(app).post("/user/create").send({
       name: "John Doe",
       email: "john.doe@gmail.com",
-      password: "123456",
       type: "owner",
     });
 

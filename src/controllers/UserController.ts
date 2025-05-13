@@ -15,7 +15,6 @@ const UserController = {
       const newuser = await UserService.create(
         req.body.name,
         req.body.email.toLowerCase(),
-        req.body.password,
         req.body.type
       );
 

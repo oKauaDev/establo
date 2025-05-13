@@ -41,14 +41,13 @@ const UserService = {
     }
   },
 
-  create: async (name: string, email: string, password: string, type: string) => {
+  create: async (name: string, email: string, type: string) => {
     const command = new PutCommand({
       TableName: TABLE_NAME,
       Item: {
         id: uuid(),
         name: name,
         email: email,
-        password: password,
         type: type,
       },
     });

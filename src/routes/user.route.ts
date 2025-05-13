@@ -11,10 +11,6 @@ const createUserSchema = z.object({
     .min(3, "O nome deve ter pelo menos 3 caracteres")
     .max(255, "O nome deve ter no máximo 255 caracteres"),
   email: z.string().email("O email é inválido"),
-  password: z
-    .string()
-    .min(6, "A senha deve ter pelo menos 6 caracteres")
-    .max(255, "A senha deve ter no máximo 255 caracteres"),
   type: z.enum(["owner", "customer"]),
 });
 
