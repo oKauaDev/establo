@@ -6,7 +6,6 @@ import establishmentRoute from "./routes/establishment.route";
 import productRoute from "./routes/product.route";
 
 const app = express();
-
 app.use(express.json());
 
 const routes = [serverRoute, userRoute, establishmentRoute, productRoute];

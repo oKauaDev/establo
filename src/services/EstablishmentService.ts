@@ -17,7 +17,7 @@ const EstablishmentService = {
   getWithId: async (id: string) => {
     try {
       const { Item } = await ddb.send(new GetCommand({ TableName: TABLE_NAME, Key: { id } }));
-      return Item;
+      return Item as EstablishmentType | undefined;
     } catch (error) {
       console.error(error);
       return undefined;

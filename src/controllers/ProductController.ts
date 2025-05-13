@@ -156,7 +156,7 @@ const ProductController = {
         return;
       }
 
-      const products = await ProductService.allByEstablishment(req.params.establishment as string);
+      const products = await ProductService.getByEstablishment(req.params.establishment as string);
 
       if (!products) {
         res.status(500).json({ error: "Erro ao listar produtos" });

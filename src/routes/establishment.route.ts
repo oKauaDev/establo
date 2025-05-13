@@ -33,11 +33,26 @@ const editEstablishmentSchema = z.object({
 
 router.put("/edit/:id", zodschema(editEstablishmentSchema), EstablishmentController.edit);
 
-// DELETE /user/establishment/:id
+// DELETE /establishment/delete/:id
 router.delete("/delete/:id", EstablishmentController.delete);
 
-// GET /user/establishment/query
+// GET /establishment/query
 router.get("/query", EstablishmentController.query);
+
+// GET /establishment/rules/:id
+router.get("/rules/:id", EstablishmentController.rules);
+
+// PUT /establishment/rules/:id/edit
+const editRulesEstablishmentSchema = z.object({
+  picturesLimit: z.number().positive("O limite de fotos deve ser um número positivo").optional(),
+  videoLimit: z.number().positive("O limite de videos deve ser um número positivo").optional(),
+});
+
+router.put(
+  "/rules/:id/edit",
+  zodschema(editRulesEstablishmentSchema),
+  EstablishmentController.editRules
+);
 
 export default {
   path: "/establishment",

@@ -7,7 +7,6 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import ddb from "../aws/dynamodbClient";
 import { v4 as uuid } from "uuid";
-import { EstablishmentType } from "../types/Establishment";
 import { EstablishmentRulesType } from "../types/EstablishmentRules";
 
 const TABLE_NAME = "EstablishmentRules";
@@ -23,7 +22,7 @@ const EstablishmentRulesService = {
     }
   },
 
-  allByEstablishment: async (id: string) => {
+  getByEstablishment: async (id: string) => {
     try {
       const filterExpression = "#establishmentId = :establishmentId";
       const expressionAttributeValue = { ":establishmentId": id };
@@ -38,7 +37,7 @@ const EstablishmentRulesService = {
         })
       );
 
-      return Items as EstablishmentRulesType[] | undefined;
+      return Items?.[0] as EstablishmentRulesType | undefined;
     } catch (error) {
       console.error(error);
       return undefined;
@@ -89,7 +88,7 @@ const EstablishmentRulesService = {
         })
       );
 
-      return Attributes as EstablishmentType | undefined;
+      return Attributes as EstablishmentRulesType | undefined;
     } catch (error) {
       console.error(error);
       return undefined;

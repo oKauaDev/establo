@@ -102,7 +102,7 @@ const ProductService = {
     }
   },
 
-  allByEstablishment: async (id: string) => {
+  getByEstablishment: async (id: string) => {
     try {
       const filterExpression = "#establishmentId = :establishmentId";
       const expressionAttributeValue = { ":establishmentId": id };

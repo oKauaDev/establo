@@ -154,6 +154,54 @@ describe("PUT /establishment/edit/:id", () => {
   });
 });
 
+describe("PUT /establishment/rules/:id", () => {
+  it("should return 404", async () => {
+    const res = await request(app).get(`/establishment/rules/notexists`);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).get(`/establishment/rules/${establishmentId}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("rules");
+
+    expect(res.body.rules).toHaveProperty("id");
+    expect(res.body.rules).toHaveProperty("establishmentId");
+    expect(res.body.rules).toHaveProperty("videoLimit");
+    expect(res.body.rules).toHaveProperty("picturesLimit");
+  });
+});
+
+describe("PUT /establishment/rules/:id/edit", () => {
+  it("should return 404", async () => {
+    const res = await request(app).put(`/establishment/rules/notsexists`).send({
+      videoLimit: 10,
+    });
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("should return 200", async () => {
+    const res = await request(app).put(`/establishment/rules/${establishmentId}/edit`).send({
+      videoLimit: 10,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success");
+    expect(res.body).toHaveProperty("message");
+    expect(res.body).toHaveProperty("rules");
+
+    expect(res.body.rules).toHaveProperty("id");
+    expect(res.body.rules).toHaveProperty("establishmentId");
+    expect(res.body.rules).toHaveProperty("videoLimit");
+    expect(res.body.rules).toHaveProperty("picturesLimit");
+  });
+});
+
 describe("PUT /establishment/query", () => {
   it("should return 500", async () => {
     const res = await request(app).get("/establishment/query?type=teste");
