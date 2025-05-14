@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
-import zodschema from "../middlewares/zodschema";
 import UserController from "../controllers/UserController";
+import zodschema from "../middlewares/zodschema";
 
 const router = Router();
 

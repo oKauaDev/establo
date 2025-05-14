@@ -1,4 +1,8 @@
-import { ListTablesCommand, CreateTableCommand } from "@aws-sdk/client-dynamodb";
+import {
+  ListTablesCommand,
+  CreateTableCommand,
+  CreateTableCommandInput,
+} from "@aws-sdk/client-dynamodb";
 import ddb from "../aws/dynamodbClient";
 
 const tables = [
@@ -65,7 +69,7 @@ async function checkAndCreateTables() {
       if (!existingTables.includes(table.TableName)) {
         console.info(`Tabela ${table.TableName} não encontrada, criando...`);
 
-        const createTableCommand = new CreateTableCommand(table as any);
+        const createTableCommand = new CreateTableCommand(table as CreateTableCommandInput);
         await ddb.send(createTableCommand);
 
         console.info(`Tabela ${table.TableName} criada com sucesso.`);

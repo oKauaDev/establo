@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import errorToString from "../utils/errorToString";
 import UserService from "../services/UserService";
 import { UserType } from "../types/User";
+import errorToString from "../utils/errorToString";
 
 const UserController = {
   create: async (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ const UserController = {
       const newuser = await UserService.create(
         req.body.name,
         req.body.email.toLowerCase(),
-        req.body.type,
+        req.body.type
       );
 
       if (!newuser) {
@@ -72,7 +72,7 @@ const UserController = {
         return;
       }
 
-      let body: Partial<UserType> = {};
+      const body: Partial<UserType> = {};
 
       if (req.body.name) body.name = req.body.name;
       if (req.body.email) body.email = req.body.email;

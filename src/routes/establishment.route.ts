@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
-import zodschema from "../middlewares/zodschema";
 import EstablishmentController from "../controllers/EstablishmentController";
+import zodschema from "../middlewares/zodschema";
 
 const router = Router();
 
@@ -15,11 +15,7 @@ const createEstablishmentSchema = z.object({
   type: z.enum(["shopping", "local"]),
 });
 
-router.post(
-  "/create",
-  zodschema(createEstablishmentSchema),
-  EstablishmentController.create,
-);
+router.post("/create", zodschema(createEstablishmentSchema), EstablishmentController.create);
 
 // GET /establishment/find/:id
 router.get("/find/:id", EstablishmentController.get);
@@ -35,11 +31,7 @@ const editEstablishmentSchema = z.object({
   type: z.enum(["shopping", "local"]).optional(),
 });
 
-router.put(
-  "/edit/:id",
-  zodschema(editEstablishmentSchema),
-  EstablishmentController.edit,
-);
+router.put("/edit/:id", zodschema(editEstablishmentSchema), EstablishmentController.edit);
 
 // DELETE /establishment/delete/:id
 router.delete("/delete/:id", EstablishmentController.delete);
@@ -52,20 +44,14 @@ router.get("/rules/:id", EstablishmentController.rules);
 
 // PUT /establishment/rules/:id/edit
 const editRulesEstablishmentSchema = z.object({
-  picturesLimit: z
-    .number()
-    .positive("O limite de fotos deve ser um número positivo")
-    .optional(),
-  videoLimit: z
-    .number()
-    .positive("O limite de videos deve ser um número positivo")
-    .optional(),
+  picturesLimit: z.number().positive("O limite de fotos deve ser um número positivo").optional(),
+  videoLimit: z.number().positive("O limite de videos deve ser um número positivo").optional(),
 });
 
 router.put(
   "/rules/:id/edit",
   zodschema(editRulesEstablishmentSchema),
-  EstablishmentController.editRules,
+  EstablishmentController.editRules
 );
 
 export default {

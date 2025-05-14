@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
-import zodschema from "../middlewares/zodschema";
 import ProductController from "../controllers/ProductController";
+import zodschema from "../middlewares/zodschema";
 
 const router = Router();
 
@@ -15,11 +15,7 @@ const createProductSchema = z.object({
   price: z.number().positive("O preço deve ser um número positivo"),
 });
 
-router.post(
-  "/create",
-  zodschema(createProductSchema),
-  ProductController.create,
-);
+router.post("/create", zodschema(createProductSchema), ProductController.create);
 
 // GET /product/find/:id
 router.get("/find/:id", ProductController.get);
@@ -31,10 +27,7 @@ const editProductSchema = z.object({
     .min(3, "O nome deve ter pelo menos 3 caracteres")
     .max(255, "O nome deve ter no máximo 255 caracteres")
     .optional(),
-  establishmentId: z
-    .string()
-    .uuid("O id do estabelecimento é inválido")
-    .optional(),
+  establishmentId: z.string().uuid("O id do estabelecimento é inválido").optional(),
   price: z.number().positive("O preço deve ser um número positivo").optional(),
 });
 

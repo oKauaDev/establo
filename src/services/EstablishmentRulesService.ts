@@ -1,12 +1,6 @@
-import {
-  GetCommand,
-  PutCommand,
-  ScanCommand,
-  UpdateCommand,
-  DeleteCommand,
-} from "@aws-sdk/lib-dynamodb";
-import ddb from "../aws/dynamodbClient";
+import { GetCommand, ScanCommand, UpdateCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuid } from "uuid";
+import ddb from "../aws/dynamodbClient";
 import { EstablishmentRulesType } from "../types/EstablishmentRules";
 
 const TABLE_NAME = "EstablishmentRules";
@@ -14,9 +8,7 @@ const TABLE_NAME = "EstablishmentRules";
 const EstablishmentRulesService = {
   getWithId: async (id: string) => {
     try {
-      const { Item } = await ddb.send(
-        new GetCommand({ TableName: TABLE_NAME, Key: { id } }),
-      );
+      const { Item } = await ddb.send(new GetCommand({ TableName: TABLE_NAME, Key: { id } }));
       return Item;
     } catch (error) {
       console.error(error);
@@ -36,7 +28,7 @@ const EstablishmentRulesService = {
           FilterExpression: filterExpression,
           ExpressionAttributeValues: expressionAttributeValue,
           ExpressionAttributeNames: expressionAttributeName,
-        }),
+        })
       );
 
       return Items?.[0] as EstablishmentRulesType | undefined;
@@ -46,16 +38,12 @@ const EstablishmentRulesService = {
     }
   },
 
-  getPutCommandCreate: (
-    establishmentId: string,
-    picturesLimit: number,
-    videoLimit: number,
-  ) => {
+  getPutCommandCreate: (establishmentId: string, picturesLimit: number, videoLimit: number) => {
     const establishmentrules: EstablishmentRulesType = {
       id: uuid(),
       establishmentId,
-      picturesLimit: 5,
-      videoLimit: 1,
+      picturesLimit: picturesLimit,
+      videoLimit: videoLimit,
     };
 
     return {
@@ -76,11 +64,11 @@ const EstablishmentRulesService = {
         .join(", ");
 
       const expressionAttributeValues = Object.fromEntries(
-        Object.entries(data).map(([k, v]) => [`:${k}`, v]),
+        Object.entries(data).map(([k, v]) => [`:${k}`, v])
       );
 
       const expressionAttributeNames = Object.fromEntries(
-        Object.keys(data).map((k) => [`#${k}`, k]),
+        Object.keys(data).map((k) => [`#${k}`, k])
       );
 
       const { Attributes } = await ddb.send(
@@ -91,7 +79,7 @@ const EstablishmentRulesService = {
           ExpressionAttributeNames: expressionAttributeNames,
           ExpressionAttributeValues: expressionAttributeValues,
           ReturnValues: "ALL_NEW",
-        }),
+        })
       );
 
       return Attributes as EstablishmentRulesType | undefined;
@@ -107,7 +95,7 @@ const EstablishmentRulesService = {
         new DeleteCommand({
           TableName: TABLE_NAME,
           Key: { id },
-        }),
+        })
       );
       return true;
     } catch (error) {

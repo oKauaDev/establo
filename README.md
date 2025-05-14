@@ -118,10 +118,10 @@ Você pode importar também para o postman, o arquivo está em `requests/Establo
 
 Tabelas usadas:
 
-- `UsersTable`
-- `EstablishmentsTable`
-- `ProductsTable`
-- `RulesTable`
+- `Users`
+- `Establishments`
+- `Products`
+- `EstablishmentsRules`
 
 > Não se preucupe em criar as tabelas, o proprío código irá verificar se as tabelas existem, e se não existem, vai criar elas automaticamente.
 
